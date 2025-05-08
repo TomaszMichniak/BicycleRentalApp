@@ -1,11 +1,11 @@
 export default function OurOffer() {
   return (
-    <section className="bg-[#262523]">
+    <section id="ourOffer"  className="bg-background-third py-16">
       <div className="max-w-screen-lg mx-auto p-4 text-white">
         <h2 className="text-2xl mb-4">Nasza Oferta</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-20 text-black">
-          <div className="bg-[#f9d43e] w-full shadow-lg rounded-lg overflow-hidden">
+          <div className="bg-background-main w-full shadow-lg rounded-lg overflow-hidden">
             <img
               src="./src\assets\rockrider-e-st100-275.jpg"
               alt="Rower elektryczny"
@@ -28,7 +28,7 @@ export default function OurOffer() {
               </ul>
             </div>
           </div>
-          <div className="bg-[#f9d43e] shadow-lg rounded-lg overflow-hidden">
+          <div className="bg-background-main shadow-lg rounded-lg overflow-hidden">
             <img
               src="./src\assets\rockrider-e-st100-275.jpg"
               alt="Rower Górski"

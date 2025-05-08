@@ -1,9 +1,10 @@
 import { useState } from "react";
-
+import { Link } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <nav className="bg-[#262523] h-16 sticky top-0 z-10 ">
+    <nav className="bg-background-grey/95 h-16 sticky top-0 z-10 ">
       <div
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         className="flex justify-end items-center p-4 md:hidden"
@@ -14,29 +15,29 @@ export default function Navigation() {
       <div className="hidden md:flex max-w-screen-lg min-h-16 mx-auto justify-center items-center text-xl ">
         <ul className=" flex space-x-8 ">
           <li className="">
-            <a href="#" className="block hover:text-[#f9d43e]">
+            <Link to={`/`} className="block hover:text-[#f9d43e]">
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#" className="block hover:text-[#f9d43e]">
+          <HashLink smooth  to={`/#aboutUs`} className="block hover:text-[#f9d43e]">
               O nas
-            </a>
+            </HashLink >
           </li>
           <li>
-            <a href="#" className="block hover:text-[#f9d43e]">
+          <HashLink smooth to={`/#ourOffer`} className="block hover:text-[#f9d43e]">
               Nasza oferta
-            </a>
-          </li> 
-          <li>
-            <a href="#" className="block hover:text-[#f9d43e]">
-              Cennik
-            </a>
+            </HashLink>
           </li>
           <li>
-            <a href="#" className="block hover:text-[#f9d43e]">
+          <HashLink smooth to={`/#price-list`} className="block hover:text-[#f9d43e]">
+              Cennik
+            </HashLink>
+          </li>
+          <li>
+            <Link to={`/reservations`} className="block hover:text-[#f9d43e]">
               Rezerwacje
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
@@ -45,30 +46,29 @@ export default function Navigation() {
         <div className="md:hidden bg-[#262523] opacity-90 py-2 ">
           <ul className="text-center text-m flex-row justify-between space-y-4 uppercase ">
             <li>
-              <a href="#" className="block ">
+            <Link to={`/`} className="block ">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="block">
+            <HashLink smooth  to={`/#aboutUs`} className="block">
                 O nas
-              </a>
+              </HashLink>
             </li>
             <li>
-              <a href="#" className="block">
+            <HashLink smooth to={`/#ourOffer`} className="block">
                 Nasza oferta
-              </a>
-            </li>  
-            <li>
-              <a href="#" className="block">
-                Cennik
-              </a>
+              </HashLink>
             </li>
             <li>
-              {" "}
-              <a href="#" className="block">
+              <HashLink smooth to={`/#price-list`} className="block">
+                Cennik
+              </HashLink>
+            </li>
+            <li>
+              <Link to={`/reservations`} className="block">
                 Rezerwacje
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

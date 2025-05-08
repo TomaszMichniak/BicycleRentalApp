@@ -1,9 +1,21 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #3498db;
+  --color-background-main: #7fc241;
+  /* --color-background-yellow: #DFD0B8; */
+  /* --color-background-yellow: #ffd31a; */
+  --color-background-grey: #f5f5f5;
+  --color-background-third: #f0f0f0;
+  --color-text-white: #00000;
+  /* --color-text-black: #000000; */
+}
 :root {
   font-family: serif;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #f9d43e;
-
+  background-color: var(--color-background-grey);
+  color: var(--color-text-white);
+ 
+  
  
 }

@@ -1,15 +1,14 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Header from "./components/header";
-import Main from "./components/main";
-import Navigation from "./components/navigation";
+import MainPage from "./pages/mainPage";
+import ReservationPage from "./pages/reservationsPage";
 
 function App() {
   return (
-    <>
-      <Navigation></Navigation>
-      <Header></Header>
-      <Main></Main>
-    </>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/reservations" element={<ReservationPage />} />
+      </Routes>
   );
 }
 
