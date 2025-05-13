@@ -5,7 +5,7 @@ import PriceList from "./priceList";
 export default function Main() {
   return (
     <main className="text-center text-xl">
-      <AboutUs></AboutUs>
+      {/* <AboutUs></AboutUs> */}
       <OurOffer></OurOffer>
       <PriceList/>
     </main>

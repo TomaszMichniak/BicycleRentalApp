@@ -1,6 +1,6 @@
 export default function AboutUs() {
   return (
-    <section id="aboutUs" className="bg-[#7fc241] m-5 max-w-screen-lg mx-auto py-16 px-4">
+    <section id="aboutUs" className="bg-[#7fc241]  max-w-screen-lg mx-auto py-16 px-4">
       <h2 className="text-2xl mb-4">O nas</h2>
       <p className="mb-4">
         Oferujemy szeroki wybór rowerów elektrycznych, które zapewnią Ci
