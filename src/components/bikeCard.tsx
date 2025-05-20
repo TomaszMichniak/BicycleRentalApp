@@ -1,18 +1,24 @@
 import { useState } from "react";
 import { BikesBySize } from "./availableBikes";
 import { BikeSize } from "../types/bikeType";
-
+import { useCart } from "../context/cartContext";
 type Props = {
   name: string;
   sizes: BikesBySize;
+  selectedDate: [Date | null, Date | null];
 };
 
-export default function BikeCard({ name, sizes }: Props) {
+export default function BikeCard({ name, sizes, selectedDate }: Props) {
+  const { cart, addToCart, rentalPeriod } = useCart();
+  const [startCartDate, endCartDate] = rentalPeriod;
   const availableSizes = Object.entries(sizes);
   const [count, setCount] = useState(1);
   const [selectedSize, setSelectedSize] = useState<BikeSize>(BikeSize.S);
   const exampleBike = sizes[selectedSize]?.bikes[0];
   const availableCount = sizes[selectedSize]?.bikes.length || 0;
+  const currentQuantityInCart =
+    cart.find((item) => item.name === name && item.size === selectedSize)
+      ?.quantity || 0;
 
   const increment = () => {
     if (count < availableCount) {
@@ -27,21 +33,33 @@ export default function BikeCard({ name, sizes }: Props) {
   };
 
   const handleAddToCart = () => {
-    if (count > availableCount) {
+    const datesChanged =
+      startCartDate?.getTime() !== selectedDate[0]?.getTime() ||
+      endCartDate?.getTime() !== selectedDate[1]?.getTime();
+      console.log(datesChanged)
+    if (datesChanged) {
+      window.confirm("Zmieniłeś datę wypożyczenia. Czy chcesz kontynuować z nową datą?");
+    }
+
+    if (!exampleBike) {
+      alert("Brak dostępnych rowerów w tym rozmiarze.");
+      return;
+    }
+    if (count + currentQuantityInCart > availableCount) {
       alert("Za duża ilość!");
       return;
     }
-
-    console.log("Dodano do koszyka:", {
+    addToCart({
       name,
       size: selectedSize,
       quantity: count,
-      bikeId: exampleBike?.id,
+      pricePerDay: exampleBike.pricePerDay,
     });
+    alert("Dodano do koszyka!");
   };
 
   const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = Number(e.target.value); 
+    const value = Number(e.target.value);
     setSelectedSize(value);
     setCount(1);
   };

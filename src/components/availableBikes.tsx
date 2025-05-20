@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { BikeSize, BikeType } from "../types/bikeType";
 import BikeCard from "./bikeCard";
+import { useCart } from "../context/cartContext";
 export type BikesBySize = Partial<Record<BikeSize, { bikes: BikeType[] }>>;
 export type GroupedBikes = Record<string, BikesBySize>;
 
@@ -9,6 +11,11 @@ type Props = {
 };
 export default function AvailableBikes({ bikes, selectedDate }: Props) {
   const groupedBikes = groupBikesByNameAndSize(bikes);
+  const { setRentalPeriod } = useCart();
+
+  useEffect(() => {
+    setRentalPeriod(selectedDate); 
+  }, [selectedDate]);
   return (
     <section className="max-w-screen-lg mx-auto p-4">
       <h2 className="text-2xl ">Dostępne rowery:</h2>
@@ -19,7 +26,7 @@ export default function AvailableBikes({ bikes, selectedDate }: Props) {
         </p>
       )}
       {Object.entries(groupedBikes).map(([name, sizes]) => (
-        <BikeCard key={name} name={name} sizes={sizes} />
+        <BikeCard key={name} name={name} sizes={sizes} selectedDate={selectedDate} />
       ))}
     </section>
   );

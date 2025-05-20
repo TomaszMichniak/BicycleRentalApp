@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { HashLink } from 'react-router-hash-link';
+import { HashLink } from "react-router-hash-link";
+import CartIcon from "../assets/cart-shopping-solid.svg";
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
@@ -15,28 +16,48 @@ export default function Navigation() {
       <div className="hidden md:flex max-w-screen-lg min-h-16 mx-auto justify-center items-center text-xl ">
         <ul className=" flex space-x-8 ">
           <li className="">
-            <Link to={`/`} className="block hover:text-[#f9d43e]">
+            <Link to={`/`} className="block hover:text-background-main">
               Home
             </Link>
           </li>
           <li>
-          <HashLink smooth  to={`/#aboutUs`} className="block hover:text-[#f9d43e]">
+            <HashLink
+              smooth
+              to={`/#aboutUs`}
+              className="block hover:text-background-main"
+            >
               O nas
-            </HashLink >
+            </HashLink>
           </li>
           <li>
-          <HashLink smooth to={`/#ourOffer`} className="block hover:text-[#f9d43e]">
+            <HashLink
+              smooth
+              to={`/#ourOffer`}
+              className="block hover:text-background-main"
+            >
               Nasza oferta
             </HashLink>
           </li>
           <li>
-          <HashLink smooth to={`/#price-list`} className="block hover:text-[#f9d43e]">
+            <HashLink
+              smooth
+              to={`/#price-list`}
+              className="block hover:text-background-main"
+            >
               Cennik
             </HashLink>
           </li>
           <li>
-            <Link to={`/reservations`} className="block hover:text-[#f9d43e]">
+            <Link to={`/reservations`} className="block hover:text-background-main">
               Rezerwacje
+            </Link>
+          </li>
+          <li>
+            <Link
+              to={`/cart`}
+              className="block"
+            >
+              <img src={CartIcon} alt="Koszyk" className="w-5 h-5" />
             </Link>
           </li>
         </ul>
@@ -46,17 +67,17 @@ export default function Navigation() {
         <div className="md:hidden bg-[#262523] opacity-90 py-2 ">
           <ul className="text-center text-m flex-row justify-between space-y-4 uppercase ">
             <li>
-            <Link to={`/`} className="block ">
+              <Link to={`/`} className="block ">
                 Home
               </Link>
             </li>
             <li>
-            <HashLink smooth  to={`/#aboutUs`} className="block">
+              <HashLink smooth to={`/#aboutUs`} className="block">
                 O nas
               </HashLink>
             </li>
             <li>
-            <HashLink smooth to={`/#ourOffer`} className="block">
+              <HashLink smooth to={`/#ourOffer`} className="block">
                 Nasza oferta
               </HashLink>
             </li>
@@ -68,6 +89,14 @@ export default function Navigation() {
             <li>
               <Link to={`/reservations`} className="block">
                 Rezerwacje
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={`/cart`}
+                className="flex items-center justify-center space-x-2"
+              >
+                <img src={CartIcon} alt="Koszyk" className="w-5 h-5" />
               </Link>
             </li>
           </ul>
