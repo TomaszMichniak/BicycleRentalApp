@@ -7,7 +7,7 @@ export default function OurOffer() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-20 text-black">
           <div className="bg-background-main w-full shadow-lg rounded-lg overflow-hidden">
             <img
-              src="./src\assets\rockrider-e-st100-275.jpg"
+              src="./src/assets/rower-elektryczny-gorski-mtb-rockrider-e-st-500-275.jpg"
               alt="Rower elektryczny"
               className="w-full  object-cover "
             />
@@ -30,7 +30,7 @@ export default function OurOffer() {
           </div>
           <div className="bg-background-main shadow-lg rounded-lg overflow-hidden">
             <img
-              src="./src\assets\rockrider-e-st100-275.jpg"
+              src="./src\assets\rower-elektryczny-gorski-mtb-rockrider-e-st-500-275.jpg"
               alt="Rower Górski"
               className="w-full object-cover"
             />
