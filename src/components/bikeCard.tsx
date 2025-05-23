@@ -36,7 +36,6 @@ export default function BikeCard({ name, sizes, selectedDate }: Props) {
     const datesChanged =
       startCartDate?.getTime() !== selectedDate[0]?.getTime() ||
       endCartDate?.getTime() !== selectedDate[1]?.getTime();
-      console.log(datesChanged)
     if (datesChanged) {
       window.confirm("Zmieniłeś datę wypożyczenia. Czy chcesz kontynuować z nową datą?");
     }
