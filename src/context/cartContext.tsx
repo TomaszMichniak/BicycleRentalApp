@@ -13,6 +13,7 @@ type CartContextValue = {
   addToCart: (item: CartItem) => void;
   removeFromCart: (name: string, size: BikeSize) => void;
   clearCart: () => void;
+  totalCount: number;
 };
 export const CartContext = createContext<CartContextValue>({
   cart: [],
@@ -21,6 +22,7 @@ export const CartContext = createContext<CartContextValue>({
   addToCart: () => {},
   removeFromCart: () => {},
   clearCart: () => {},
+  totalCount: 0,
 });
 export const useCart = () => {
   const context = useContext(CartContext);
@@ -41,6 +43,16 @@ export default function CartContextProvider({
     tomorrowStart,
     tomorrowStart,
   ]);
+  const [start, end] = rentalPeriod;
+  const rentalDays =
+    start && end
+      ? Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24))
+      : 0;
+
+  const totalCount = cart.reduce(
+    (sum, bike) => sum + bike.pricePerDay * rentalDays * bike.quantity,
+    0
+  );
   const addToCart = (bikeToAdd: CartItem) => {
     setCart((prev) => {
       const existingIndex = prev.findIndex(
@@ -87,6 +99,7 @@ export default function CartContextProvider({
         addToCart,
         removeFromCart,
         clearCart,
+        totalCount,
       }}
     >
       {children}

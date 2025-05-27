@@ -1,7 +1,7 @@
 import { Address } from "../types/addressType";
 import { api } from "./axios";
 
-export async function GetCoordinates(address: Address): Promise<{
+export async function GetCoordinates(address: {street: string; city: string; postalCode: string}): Promise<{
   lat: number;
   lng: number;
   isWithinDeliveryRange: boolean;

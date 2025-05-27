@@ -1,20 +1,30 @@
 import { useState } from "react";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { Guest } from "../types/guestType";
-import { Address } from "../types/addressType";
+import { Address, AddressType } from "../types/addressType";
 import { MobileForm } from "./mobileForm";
 import { DesktopForm } from "./desktopForm";
 import { FormDataValues } from "../types/formDataValues";
+import { useCart } from "../context/cartContext";
+import { CreateReservation } from "../api/reservation";
 
 export const ResponsiveForm = () => {
   const isMobile = useIsMobile();
+  const { cart, rentalPeriod, totalCount } = useCart();
   const [formData, setFormData] = useState<FormDataValues>({
+    totalPrice: totalCount,
+    startDate: rentalPeriod[0] || new Date(),
+    endDate: rentalPeriod[1] || new Date(),
     guest: { firstName: "", lastName: "", email: "", phone: "" },
-    address: { street: "", city: "", postalCode: "" },
+    address: {
+      street: "",
+      city: "",
+      postalCode: "",
+      type: null,
+    },
     paymentMethod: "card",
-    deliveryOption: "standard",
+    bicycles: cart,
   });
-
   const updateGuest = (data: Partial<Guest>) =>
     setFormData((prev) => ({ ...prev, guest: { ...prev.guest, ...data } }));
   const updateAddress = (data: Partial<Address>) =>
@@ -25,7 +35,8 @@ export const ResponsiveForm = () => {
   const updateForm = (data: Partial<FormDataValues>) => {
     setFormData((prev) => ({ ...prev, ...data }));
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    await CreateReservation(formData);
     console.log("Formularz wysłany:", formData);
   };
   return isMobile ? (

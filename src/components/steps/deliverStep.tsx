@@ -1,55 +1,82 @@
-import { Address } from "../../types/addressType";
+import { Address, AddressType } from "../../types/addressType";
 import { FormDataValues } from "../../types/formDataValues";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LocationFetcher from "../locationFetcher";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { GetCoordinates, reverseGeocodeCoords } from "../../api/geoLocation";
+import { GetPickupLocations } from "../../api/address";
 
 type Props = {
   data: Address;
   onChange: (data: Partial<Address>) => void;
-  deliveryOption: string;
   updateForm: (data: Partial<FormDataValues>) => void;
   onBack?: () => void;
   onNext?: () => void;
 };
 
-const pickupLocations = [
-  "Kościelisko ul. Nędzy Kubińca 255",
-  "Nowe Bystre 113",
-];
 export default function DeliveryStep({
   data,
-  deliveryOption,
   onBack,
   onNext,
   onChange,
-  updateForm,
 }: Props) {
   const [inputChanged, setInputChanged] = useState(false);
   const isMobile = useIsMobile();
   const [selectedPickup, setSelectedPickup] = useState("");
   const [deliveryAllowed, setDeliveryAllowed] = useState<boolean | null>(null);
-  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(
-    null
-  );
-  const [loadingCoords, setLoadingCoords] = useState(false);
+  const [pickupLocations, setPickupLocations] = useState<Address[]>([]);
+
+  useEffect(() => {
+    async function loadPickupLocations() {
+      const locations = await GetPickupLocations();
+      if (locations.length === 0) {
+        alert("Nie udało się załadować lokalizacji odbioru.");
+      } else {
+        setPickupLocations(locations);
+      }
+    }
+
+    if (data.type === AddressType.PickupPoint) {
+      loadPickupLocations();
+    }
+  }, [data.type]);
+
+  useEffect(() => {
+    if (selectedPickup) {
+      const pickupData = pickupLocations.find((loc) => loc.id === selectedPickup);
+      if (pickupData) {
+        onChange({
+          id: pickupData.id,
+          street: pickupData.street,
+          city: pickupData.city,
+          postalCode: pickupData.postalCode,
+          type: AddressType.PickupPoint,
+        });
+      }
+    } else if (data.type === AddressType.PickupPoint) {
+      onChange({
+        id: undefined,
+        street: "",
+        city: "",
+        postalCode: "",
+        type: AddressType.PickupPoint,
+      });
+    }
+  }, [selectedPickup, pickupLocations]);
 
   const handleCheckAddress = async () => {
     if (
-      deliveryOption === "courier" &&
+      data.type === AddressType.GuestAddress &&
       data.street &&
       data.city &&
       data.postalCode
     ) {
       const fullAddress: Address = {
-        street: data.street,
-        city: data.city,
-        postalCode: data.postalCode,
+        ...data,
+        type: AddressType.GuestAddress,
       };
       const result = await GetCoordinates(fullAddress);
       if (result) {
-        setCoords({ lat: result.lat, lng: result.lng });
         setDeliveryAllowed(result.isWithinDeliveryRange);
       } else {
         setDeliveryAllowed(false);
@@ -57,27 +84,31 @@ export default function DeliveryStep({
       setInputChanged(false);
     }
   };
-  const handleSelect = (option: string) => {
-    updateForm({ deliveryOption: option });
-    if (option !== "pickup") {
+
+  const handleSelect = (type: AddressType) => {
+    onChange({
+      type,
+      ...(type !== AddressType.PickupPoint ? {} : { id: undefined }),
+    });
+    if (type !== AddressType.PickupPoint) {
       setSelectedPickup("");
     }
   };
+
   const handleGetLocation = async (lat: number, lng: number) => {
     const result = await reverseGeocodeCoords(lat, lng);
-    console.log("Reverse geocode result:", result);
     if (result) {
       onChange({
         street: result.street,
         city: result.city,
         postalCode: result.postalCode,
+        type: AddressType.GuestAddress,
       });
-      setCoords({ lat, lng });
       setDeliveryAllowed(result.isWithinDeliveryRange);
     }
   };
+
   const handleOnChangeInputs = () => {
-    console.log("Input changed");
     setInputChanged(true);
   };
 
@@ -89,9 +120,9 @@ export default function DeliveryStep({
         {/* === Odbiór osobisty === */}
         <button
           type="button"
-          onClick={() => handleSelect("pickup")}
+          onClick={() => handleSelect(AddressType.PickupPoint)}
           className={`w-full flex items-center px-4 py-3 rounded-xl border transition ${
-            deliveryOption === "pickup"
+            data.type === AddressType.PickupPoint
               ? "border-green-500 bg-green-50"
               : "border-gray-300 hover:border-gray-500 bg-white"
           }`}
@@ -100,7 +131,23 @@ export default function DeliveryStep({
           Odbiór osobisty
         </button>
 
-        {deliveryOption === "pickup" && (
+        {/* === Kurier === */}
+        <button
+          type="button"
+          onClick={() => handleSelect(AddressType.GuestAddress)}
+          className={`w-full flex items-center px-4 py-3 rounded-xl border transition ${
+            data.type === AddressType.GuestAddress
+              ? "border-green-500 bg-green-50"
+              : "border-gray-300 hover:border-gray-500 bg-white"
+          }`}
+        >
+          <span className="mr-2">🚚</span>
+          Dostawa kurierem
+        </button>
+
+     
+        {/* === Szczegóły odbioru osobistego === */}
+        {data.type === AddressType.PickupPoint && (
           <div className="ml-4">
             <label className="block text-sm text-gray-700 mb-1">
               Wybierz lokalizację:
@@ -112,29 +159,16 @@ export default function DeliveryStep({
             >
               <option value="">-- Wybierz --</option>
               {pickupLocations.map((loc) => (
-                <option key={loc} value={loc}>
-                  {loc}
+                <option key={loc.id} value={loc.id}>
+                  {loc.city} {loc.street}, {loc.postalCode}
                 </option>
               ))}
             </select>
           </div>
         )}
 
-        {/* === Kurier === */}
-        <button
-          type="button"
-          onClick={() => handleSelect("courier")}
-          className={`w-full flex items-center px-4 py-3 rounded-xl border transition ${
-            deliveryOption === "courier"
-              ? "border-green-500 bg-green-50"
-              : "border-gray-300 hover:border-gray-500 bg-white"
-          }`}
-        >
-          <span className="mr-2">🚚</span>
-          Dostawa kurierem
-        </button>
-
-        {deliveryOption === "courier" && (
+        {/* === Szczegóły dostawy kurierem === */}
+        {data.type === AddressType.GuestAddress && (
           <div className="mt-4 space-y-4 border border-gray-200 p-4 rounded-lg">
             <h3 className="text-md font-medium">Adres dostawy</h3>
 
@@ -178,21 +212,17 @@ export default function DeliveryStep({
               Sprawdź adres dostawy
             </button>
             {deliveryAllowed && (
-              <div className="mt-2 text-sm text-gray-500">
-                Dowozimy.
-              </div>
-            )} 
-            {!deliveryAllowed && (
-              <div className="mt-2 text-sm text-red-500">
-               Nie dowozimy.
-              </div>
+              <div className="mt-2 text-sm text-gray-500">Dowozimy.</div>
             )}
-            <LocationFetcher onClick={handleGetLocation}></LocationFetcher>
+            {deliveryAllowed === false && (
+              <div className="mt-2 text-sm text-red-500">Nie dowozimy.</div>
+            )}
+            <LocationFetcher onClick={handleGetLocation} />
           </div>
         )}
         {inputChanged && (
           <div className="mt-2 text-sm text-gray-500">
-            Musisz sprawdzic adres dostawy przed kontynuowaniem.
+            Musisz sprawdzić adres dostawy przed kontynuowaniem.
           </div>
         )}
       </div>
@@ -209,8 +239,8 @@ export default function DeliveryStep({
               className="btn"
               onClick={onNext}
               disabled={
-                deliveryOption === "courier" &&
-                (!deliveryAllowed || loadingCoords)
+                data.type === AddressType.GuestAddress &&
+                (!deliveryAllowed )
               }
             >
               Dalej

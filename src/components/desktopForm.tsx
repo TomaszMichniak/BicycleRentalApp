@@ -23,14 +23,19 @@ export const DesktopForm = ({
   handleSubmit,
 }: Props) => {
   return (
-    <form className="grid grid-cols-3 gap-6 p-6 bg-white rounded-xl shadow-lg max-w-6xl mx-auto">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit();
+      }}
+      className="grid grid-cols-3 gap-6 p-6 bg-white rounded-xl shadow-lg max-w-6xl mx-auto"
+    >
       <div>
         <ContactStep data={formData.guest} onChange={updateGuest} />
       </div>
       <div>
         <DeliveryStep
           data={formData.address}
-          deliveryOption={formData.deliveryOption}
           onChange={updateAddress}
           updateForm={updateForm}
         />

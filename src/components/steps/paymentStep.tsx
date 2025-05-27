@@ -28,20 +28,18 @@ export default function PaymentStep({
         <option value="blik">BLIK</option>
         <option value="cash">Gotówka</option>
       </select>
-      {isMobile && (
-        <div className="flex gap-2">
-          {onBack && (
-            <button className="btn" onClick={onBack}>
-              Wstecz
-            </button>
-          )}
-          {onSubmit && (
-            <button className="btn" onClick={onSubmit}>
-              Zamów
-            </button>
-          )}
-        </div>
-      )}
+      <div className="flex gap-2">
+        {isMobile && (
+          <button className="btn" onClick={onBack}>
+            Wstecz
+          </button>
+        )}
+        {onSubmit && (
+          <button type="button" className="btn" onClick={onSubmit}>
+            Zamów
+          </button>
+        )}
+      </div>
     </div>
   );
 }

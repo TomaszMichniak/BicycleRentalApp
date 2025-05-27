@@ -2,7 +2,7 @@ import { useCart } from "../context/cartContext";
 import { BikeSize } from "../types/bikeType";
 
 export default function Cart() {
-  const { cart, rentalPeriod, removeFromCart, clearCart } = useCart();
+  const { cart, rentalPeriod, removeFromCart, clearCart,totalCount } = useCart();
   const [start, end] = rentalPeriod;
 
   const rentalDays =
@@ -14,7 +14,6 @@ export default function Cart() {
     (sum, bike) => sum + bike.pricePerDay * rentalDays * bike.quantity,
     0
   );
-
   return (
       <section className="p-4 max-w-screen-md mx-auto">
         <h2 className="text-2xl mb-4">🛒 Koszyk</h2>
@@ -64,7 +63,7 @@ export default function Cart() {
 
             {rentalDays > 0 && (
               <div className="mt-6 text-right">
-                <p className="text-xl font-bold">Łącznie: {total} zł</p>
+                <p className="text-xl font-bold">Łącznie: {totalCount} zł</p>
               </div>
             )}
 
