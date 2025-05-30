@@ -17,8 +17,8 @@ type Props = {
 export default function DeliveryStep({
   data,
   onBack,
-  onNext,
   onChange,
+  onNext,
 }: Props) {
   const [inputChanged, setInputChanged] = useState(false);
   const isMobile = useIsMobile();
@@ -43,7 +43,9 @@ export default function DeliveryStep({
 
   useEffect(() => {
     if (selectedPickup) {
-      const pickupData = pickupLocations.find((loc) => loc.id === selectedPickup);
+      const pickupData = pickupLocations.find(
+        (loc) => loc.id === selectedPickup
+      );
       if (pickupData) {
         onChange({
           id: pickupData.id,
@@ -145,7 +147,6 @@ export default function DeliveryStep({
           Dostawa kurierem
         </button>
 
-     
         {/* === Szczegóły odbioru osobistego === */}
         {data.type === AddressType.PickupPoint && (
           <div className="ml-4">
@@ -227,7 +228,7 @@ export default function DeliveryStep({
         )}
       </div>
 
-      {isMobile && (
+       {isMobile && (
         <div className="flex gap-2 pt-4">
           {onBack && (
             <button className="btn" onClick={onBack}>

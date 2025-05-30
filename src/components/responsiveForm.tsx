@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { Guest } from "../types/guestType";
-import { Address, AddressType } from "../types/addressType";
+import { Address } from "../types/addressType";
 import { MobileForm } from "./mobileForm";
 import { DesktopForm } from "./desktopForm";
 import { FormDataValues } from "../types/formDataValues";
 import { useCart } from "../context/cartContext";
-import { CreateReservation } from "../api/reservation";
+import { CreateReservationWithPayment } from "../api/reservation";
 
 export const ResponsiveForm = () => {
   const isMobile = useIsMobile();
@@ -29,14 +29,11 @@ export const ResponsiveForm = () => {
     setFormData((prev) => ({ ...prev, guest: { ...prev.guest, ...data } }));
   const updateAddress = (data: Partial<Address>) =>
     setFormData((prev) => ({ ...prev, address: { ...prev.address, ...data } }));
-  const updatePayment = (
-    method: any //TODO: define PaymentMethod type
-  ) => setFormData((prev) => ({ ...prev, paymentMethod: method }));
   const updateForm = (data: Partial<FormDataValues>) => {
     setFormData((prev) => ({ ...prev, ...data }));
   };
   const handleSubmit = async () => {
-    await CreateReservation(formData);
+    await CreateReservationWithPayment(formData);
     console.log("Formularz wysłany:", formData);
   };
   return isMobile ? (
@@ -44,7 +41,6 @@ export const ResponsiveForm = () => {
       formData={formData}
       updateGuest={updateGuest}
       updateAddress={updateAddress}
-      updatePayment={updatePayment}
       updateForm={updateForm}
       handleSubmit={handleSubmit}
     />
@@ -53,7 +49,6 @@ export const ResponsiveForm = () => {
       formData={formData}
       updateGuest={updateGuest}
       updateAddress={updateAddress}
-      updatePayment={updatePayment}
       updateForm={updateForm}
       handleSubmit={handleSubmit}
     />
