@@ -13,7 +13,9 @@ export default function BikeCard({ name, sizes, selectedDate }: Props) {
   const [startCartDate, endCartDate] = rentalPeriod;
   const availableSizes = Object.entries(sizes);
   const [count, setCount] = useState(1);
-  const [selectedSize, setSelectedSize] = useState<BikeSize>(BikeSize.S);
+
+  const firstBikeSize = availableSizes[0][1].bikes[0].size;
+  const [selectedSize, setSelectedSize] = useState<BikeSize>(firstBikeSize);
   const exampleBike = sizes[selectedSize]?.bikes[0];
   const availableCount = sizes[selectedSize]?.bikes.length || 0;
   const currentQuantityInCart =
@@ -53,6 +55,7 @@ export default function BikeCard({ name, sizes, selectedDate }: Props) {
       size: selectedSize,
       quantity: count,
       pricePerDay: exampleBike.pricePerDay,
+      imgURL: exampleBike.imageUrl,
     });
     alert("Dodano do koszyka!");
   };

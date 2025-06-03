@@ -8,7 +8,6 @@ import { ReservationContextProvider } from "./context/reservationContext";
 import ReservationStatusPage from "./pages/reservationStatusPage";
 
 function App() {
-  alert("TODO DeliveryHours")
   return (
     <ReservationContextProvider>
       <CartContextProvider>

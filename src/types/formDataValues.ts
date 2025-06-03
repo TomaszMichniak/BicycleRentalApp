@@ -9,6 +9,6 @@ export type FormDataValues = {
   guest: Guest;
   address: Address;
   paymentMethod: string;
+  deliveryHours:string;
   bicycles:CartItem[];
-  // paymentMethod: PaymentMethod;
 };

@@ -9,44 +9,54 @@ type Props = {
   formData: FormDataValues;
   updateGuest: (data: Partial<Guest>) => void;
   updateAddress: (data: Partial<Address>) => void;
-  updatePayment: (method: any) => void; //TODO: define PaymentMethod type
   updateForm: (data: Partial<FormDataValues>) => void;
   handleSubmit: () => void;
+  validateContact: () => { [key: string]: boolean };
+  validateDelivery: () => { [key: string]: boolean };
+  setDeliveryErrors: (errors: { [key: string]: boolean }) => void;
+  contactErrors: { [key: string]: boolean };
+  deliveryErrors: { [key: string]: boolean };
 };
 
 export const DesktopForm = ({
   formData,
   updateGuest,
   updateAddress,
-  updatePayment,
   updateForm,
   handleSubmit,
+  validateContact,
+  validateDelivery,
+  setDeliveryErrors,
+  contactErrors,
+  deliveryErrors,
 }: Props) => {
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        handleSubmit();
       }}
       className="grid grid-cols-3 gap-6 p-6 bg-white rounded-xl shadow-lg max-w-6xl mx-auto"
     >
       <div>
-        <ContactStep data={formData.guest} onChange={updateGuest} />
+        <ContactStep
+          data={formData.guest}
+          onChange={updateGuest}
+          validateContact={validateContact}
+          errors={contactErrors}
+        />
       </div>
       <div>
         <DeliveryStep
           data={formData.address}
           onChange={updateAddress}
           updateForm={updateForm}
+          validateDelivery={validateDelivery}
+          errors={deliveryErrors}
+          setErrors={setDeliveryErrors}
         />
       </div>
       <div>
-        <PaymentStep
-          value={formData.paymentMethod}
-          paymentMethod={formData.paymentMethod}
-          onChange={updatePayment}
-          onSubmit={handleSubmit}
-        />
+        <PaymentStep onSubmit={handleSubmit} />
       </div>
     </form>
   );

@@ -5,4 +5,5 @@ export type CartItem = {
   size: BikeSize;
   pricePerDay: number;
   quantity: number;
+  imgURL:string;
 };

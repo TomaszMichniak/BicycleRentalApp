@@ -41,14 +41,13 @@ export default function CartContextProvider({
   const [cart, setCart] = useState<CartItem[]>([]);
   const [rentalPeriod, setRentalPeriod] = useState<[Date | null, Date | null]>([
     tomorrowStart,
-    tomorrowStart,
+    tomorrowEnd,
   ]);
   const [start, end] = rentalPeriod;
   const rentalDays =
     start && end
       ? Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24))
       : 0;
-
   const totalCount = cart.reduce(
     (sum, bike) => sum + bike.pricePerDay * rentalDays * bike.quantity,
     0

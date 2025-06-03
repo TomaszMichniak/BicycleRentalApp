@@ -1,44 +1,91 @@
-import { useIsMobile } from "../../hooks/useIsMobile";
+import { useState } from "react";
+import NextStepButton from "../buttons/nextStepButton";
+import PreviousStepButton from "../buttons/previousStepButton";
 
 type Props = {
-  value: any; //TODO Define FormData type
-  paymentMethod: string;
-  onChange: (method: any) => void; //Todo: define PaymentMethod type
   onBack?: () => void;
-  onSubmit?: () => void;
+  onSubmit: () => void;
 };
-export default function PaymentStep({
-  value,
-  paymentMethod,
-  onSubmit,
-  onBack,
-  onChange,
-}: Props) {
-  const isMobile = useIsMobile();
+export default function PaymentStep({ onSubmit, onBack }: Props) {
+  const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const handleOnSubmit = () => {
+    console.log("Submitting payment step",validatePayment());
+    if (validatePayment()) {
+      onSubmit();
+    }
+  };
+  const validatePayment = () => {
+    const newErrors: { [key: string]: boolean } = {};
+    if (!acceptedTerms) newErrors.acceptedTerms = true;
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Wybierz metodę płatności</h2>
-      <select
-        className="w-full p-2 border rounded"
-        value={paymentMethod}
-        onChange={(e) => onChange({ paymentMethod: e.target.value })}
-      >
-        <option value="">Wybierz</option>
-        <option value="card">Karta</option>
-        <option value="blik">BLIK</option>
-        <option value="cash">Gotówka</option>
-      </select>
+      <div className="bg-background-main p-4">
+        <h2 className="text-4xl text-white">Metody płatności</h2>
+      </div>
+      <div className="p-6 bg-white rounded shadow">
+        <label className="flex items-center space-x-3 cursor-pointer">
+          <input
+            readOnly
+            type="radio"
+            name="paymentMethod"
+            value="payu"
+            checked
+            className="form-radio text-background-main"
+          />
+          <span className="text-lg font-medium">
+            PayU{" "}
+            <span className="text-sm text-gray-600">
+              (BLIK, karta płatnicza, przelew)
+            </span>
+          </span>
+        </label>
+      </div>
+      <div className="px-6">
+        <div className="flex items-center space-x-2  ">
+          <input
+            type="checkbox"
+            id="acceptTerms"
+            checked={acceptedTerms}
+            onChange={() => {
+              if (errors.acceptedTerms) {
+                setErrors((prev) => ({ ...prev, acceptedTerms: false }));
+              }
+              setAcceptedTerms(!acceptedTerms);
+            }}
+            className="flex items-center cursor-pointer text-sm text-gray-700 rounded px-2 py-1 "
+          />
+          <label
+            htmlFor="acceptTerms"
+            className="text-sm text-gray-700 cursor-pointer"
+          >
+            Akceptuję{" "}
+            <a
+              href="/regulamin"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-background-main underline"
+            >
+              regulamin
+            </a>
+          </label>
+        </div>
+        {errors.acceptedTerms && (
+          <p className="text-red-500 text-sm mb-1">
+            Musisz zaakceptować regulamin, aby kontynuować.
+          </p>
+        )}
+      </div>
       <div className="flex gap-2">
-        {isMobile && (
-          <button className="btn" onClick={onBack}>
-            Wstecz
-          </button>
-        )}
-        {onSubmit && (
-          <button type="button" className="btn" onClick={onSubmit}>
-            Zamów
-          </button>
-        )}
+        {onBack && <PreviousStepButton onBack={onBack} message="<" />}
+
+        <NextStepButton
+          message="Przejdź do płatności"
+          onNext={handleOnSubmit}
+        />
       </div>
     </div>
   );
