@@ -1,9 +1,9 @@
 import { useCart } from "../context/cartContext";
 import { BikeSize } from "../types/bikeType";
 import BinIcon from "../assets/trash-solid.svg";
+import { Link } from "react-router-dom";
 export default function Cart() {
-  const { cart, rentalPeriod, removeFromCart, clearCart, totalCount } =
-    useCart();
+  const { cart, rentalPeriod, removeFromCart, totalCount } = useCart();
   const [start, end] = rentalPeriod;
   const rentalDays =
     start && end
@@ -14,24 +14,26 @@ export default function Cart() {
     <section className="p-2 max-w-screen-md mx-auto">
       <h2 className="text-2xl mb-4">🛒 Koszyk</h2>
 
-      {start && end ? (
+      {start && end && cart.length > 0 ? (
         <p className="text-sm text-gray-600 mb-4">
           Wypożyczenie od: <strong>{start.toLocaleDateString()}</strong> do{" "}
           <strong>{end.toLocaleDateString()}</strong> ({rentalDays}{" "}
           {rentalDays === 1 ? "dzień" : "dni"})
         </p>
       ) : (
-        <p className="text-sm text-red-600 mb-4">
-          Wybierz datę wypożyczenia, aby zobaczyć ceny.
+        <p className="text-gray-500 text-center md:text-lg">
+          Wygląda na to, że koszyk jest pusty. Dodaj rowery, przechodząc do
+          sekcji{" "}
+          <Link to={"/reservations"} className=" cursor-pointer underline">
+            Rezerwacje
+          </Link>
         </p>
       )}
 
-      {cart.length === 0 ? (
-        <p className="text-gray-500">Koszyk jest pusty.</p>
-      ) : (
+      {cart.length > 0 && (
         <>
           <ul className="space-y-4 ">
-            {cart.map(({ name, size, quantity, pricePerDay,imgURL }) => (
+            {cart.map(({ name, size, quantity, pricePerDay, imgURL }) => (
               <li
                 key={`${name}-${size}`}
                 className=" flex justify-start bg-white"
@@ -47,13 +49,13 @@ export default function Cart() {
                     Rozmiar: {BikeSize[size]}
                   </p>
                   <p className="text-sm text-gray-600">
-                    {pricePerDay} zł/dzień × {quantity} szt.
-                    = {pricePerDay * rentalDays * quantity} zł
+                    {pricePerDay} zł/dzień × {quantity} szt. ={" "}
+                    {pricePerDay * rentalDays * quantity} zł
                   </p>
                 </div>
                 <button
                   onClick={() => removeFromCart(name, size)}
-                  className= "text-white px-3 py-1 rounded ml-auto cursor-pointer"
+                  className="text-white px-3 py-1 rounded ml-auto cursor-pointer"
                 >
                   <img src={BinIcon} alt="Usuń" className="w-5 h-5" />
                 </button>
@@ -63,7 +65,9 @@ export default function Cart() {
 
           {rentalDays > 0 && (
             <div className="mt-6 text-right">
-              <p className="text-xl font-bold">Cena całkowita: {totalCount} zł</p>
+              <p className="text-xl font-bold">
+                Cena całkowita: {totalCount} zł
+              </p>
             </div>
           )}
         </>

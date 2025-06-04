@@ -5,7 +5,7 @@ type Props = {
 };
 
 export default function DeliveryHours({ onChange }: Props) {
-  const deliveryTimeSlots = Array.from({ length: 10 }, (_, i) => {
+  const deliveryTimeSlots = Array.from({ length: 6 }, (_, i) => {
     const startHour = i + 8;
     const endHour = startHour + 1;
 

@@ -10,14 +10,17 @@
   --color-text-white: #00000;
   /* --color-text-black: #000000; */
 }
+@font-face {
+  font-family: 'Quicksand-Light';
+  src: url('./assets/fonts/Quicksand-Light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 :root {
-  font-family:sans-serif;
+  font-family:'Quicksand-Light', sans-serif;
   color-scheme: light dark;
   background-color: var(--color-background-grey);
   color: var(--color-text-white);
- 
-  
- 
 }
 /* Stylowanie całego kalendarza */
 .react-calendar {

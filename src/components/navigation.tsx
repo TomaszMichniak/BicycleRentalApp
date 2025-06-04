@@ -39,15 +39,6 @@ export default function Navigation() {
             </HashLink>
           </li>
           <li>
-            <HashLink
-              smooth
-              to={`/#price-list`}
-              className="block hover:text-background-main"
-            >
-              Cennik
-            </HashLink>
-          </li>
-          <li>
             <Link to={`/reservations`} className="block hover:text-background-main">
               Rezerwacje
             </Link>

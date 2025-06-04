@@ -6,8 +6,10 @@ import { BikeType } from "../types/bikeType";
 import AvailableBikes from "../components/availableBikes";
 import { useReservationContext } from "../context/reservationContext";
 import { GetAvailableBicyclesByDate } from "../api/bicycle";
+import LoadingLoop from "../components/loadingLoop";
 
 export default function ReservationPage() {
+  const [loadingLoop, setLoadingLoop] = useState(false);
   const { value, setValue } = useReservationContext();
   const tomorrowStart = new Date();
   tomorrowStart.setDate(tomorrowStart.getDate() + 1);
@@ -15,6 +17,7 @@ export default function ReservationPage() {
   const [bikes, setBikes] = useState<BikeType[]>([]);
   useEffect(() => {
     (async () => {
+      setLoadingLoop(true);
       if (
         Array.isArray(value) &&
         value.length === 2 &&
@@ -28,6 +31,9 @@ export default function ReservationPage() {
           console.error("Failed to fetch available bicycles", error);
         }
       }
+      setTimeout(() => {
+        setLoadingLoop(false);
+      }, 300);
     })();
   }, [value]);
 
@@ -46,6 +52,7 @@ export default function ReservationPage() {
         tomorrowStart={tomorrowStart}
       />
       <AvailableBikes bikes={bikes} selectedDate={value} />
+      {loadingLoop && <LoadingLoop></LoadingLoop>}
     </>
   );
 }

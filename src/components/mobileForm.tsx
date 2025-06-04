@@ -6,6 +6,7 @@ import DeliveryStep from "./steps/deliverStep";
 import PaymentStep from "./steps/paymentStep";
 import { FormDataValues } from "../types/formDataValues";
 import { AnimatePresence, motion } from "framer-motion";
+import NextStepButton from "./buttons/nextStepButton";
 
 type Props = {
   formData: FormDataValues;
@@ -72,15 +73,11 @@ export default function MobileForm({
   return (
     <div className="py-4 relative overflow-hidden">
       {step === 0 && (
-        <button
-          onClick={() => {
+        <NextStepButton onNext={() => {
             hideCart();
             nextStep();
           }}
-          className="bg-background-main w-full text-xl text-background-third px-4 py-2 rounded mb-4"
-        >
-          Zamawiam
-        </button>
+          message="Zamawiam"></NextStepButton>
       )}
 
       <AnimatePresence mode="wait" custom={direction}>
