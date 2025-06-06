@@ -33,7 +33,7 @@ export default function DeliveryHours({ onChange }: Props) {
     <div className=" mt-2">
       <label
         htmlFor="deliverySlot"
-        className="block text-sm text-gray-600 mb-1"
+        className="block text-sm md:text-base text-gray-600 mb-1"
       >
         Wybierz godzinę
       </label>
@@ -41,7 +41,7 @@ export default function DeliveryHours({ onChange }: Props) {
         id="deliverySlot"
         value={selectedSlot}
         onChange={(e) => handleChange(e)}
-        className="w-full border border-gray-500 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-background-main focus:border-background-main"
+        className="w-full border md:text-lg border-gray-500 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-background-main focus:border-background-main"
       >
         {deliveryTimeSlots.map((slot) => (
           <option key={slot.value} value={slot.value}>

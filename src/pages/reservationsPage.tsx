@@ -6,7 +6,8 @@ import { BikeType } from "../types/bikeType";
 import AvailableBikes from "../components/availableBikes";
 import { useReservationContext } from "../context/reservationContext";
 import { GetAvailableBicyclesByDate } from "../api/bicycle";
-import LoadingLoop from "../components/loadingLoop";
+import LoadingLoop from "../components/modals/loadingLoop";
+import ReserationSteps from "../components/reservationSteps";
 
 export default function ReservationPage() {
   const [loadingLoop, setLoadingLoop] = useState(false);
@@ -45,7 +46,8 @@ export default function ReservationPage() {
   return (
     <>
       <Navigation></Navigation>
-      <h1 className="text-2xl text-center mt-4">Rezerwacje</h1>
+      <h1 className="text-2xl md:text-3xl text-center my-4">Jak to zrobić?</h1>
+      <ReserationSteps/>
       <DatePicker
         value={value}
         onChange={onChange}

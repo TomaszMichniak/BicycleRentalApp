@@ -8,7 +8,7 @@ import { GetPickupLocations } from "../../api/address";
 import DeliveryHours from "./deliveryHours";
 import PreviousStepButton from "../buttons/previousStepButton";
 import NextStepButton from "../buttons/nextStepButton";
-import LoadingLoop from "../loadingLoop";
+import LoadingLoop from "../modals/loadingLoop";
 
 type Props = {
   errors: { [key: string]: boolean };
@@ -103,6 +103,7 @@ export default function DeliveryStep({
   };
 
   const handleSelect = (type: AddressType) => {
+    setErrors({ selectedPickupError: false });
     setDeliveryAllowed(null);
     setIsButtonDisabled(false);
     onChange({
@@ -129,6 +130,9 @@ export default function DeliveryStep({
   };
 
   const handleOnNext = async () => {
+    if (!selectedPickup) {
+      setErrors({ selectedPickupError: true });
+    }
     if (data.type === AddressType.PickupPoint && !!selectedPickup) {
       onNext?.();
     } else if (data.type === AddressType.GuestAddress) {
@@ -137,15 +141,16 @@ export default function DeliveryStep({
         const result = await handleCheckAddress();
         if (result) {
           onNext?.();
-        } 
+        }
       }
     }
   };
-
   return (
     <div className="space-y-6">
       <div className="bg-background-main p-4">
-        <h2 className="text-4xl text-white">Wybierz sposób odbioru</h2>
+        <h2 className="text-3xl md:text-4xl text-white">
+          Wybierz sposób odbioru
+        </h2>
       </div>
       <div className="flex flex-col space-y-3 mx-4">
         {/* === Pickup Point === */}
@@ -164,13 +169,20 @@ export default function DeliveryStep({
         {/* === Details pickup point === */}
         {data.type === AddressType.PickupPoint && (
           <div className="ml-4">
-            <label className="block text-sm text-gray-600 mb-1">
+            <label className="block text-sm md:text-base text-gray-600 mb-1">
               Wybierz lokalizację:
             </label>
             <select
               value={selectedPickup}
-              onChange={(e) => setSelectedPickup(e.target.value)}
-              className="w-full border border-gray-500 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-background-main focus:border-background-main"
+              onChange={(e) => {
+                setErrors({ selectedPickupError: false });
+                setSelectedPickup(e.target.value);
+              }}
+              className={` ${
+                errors.selectedPickupError ? " border-red-500" : ""
+              }
+                w-full border md:text-lg  rounded-lg px-3 py-2 border-gray-500 focus:outline-none focus:ring-1 focus:ring-background-main focus:border-background-main !impo"
+                `}
             >
               <option value="">-- Wybierz --</option>
               {pickupLocations.map((loc) => (
@@ -209,17 +221,16 @@ export default function DeliveryStep({
                   type="text"
                   value={data.city}
                   onChange={(e) => {
-                    //  setErrors((prev) => ({ ...prev, city: false }));
                     onChange({ city: e.target.value });
                   }}
-                  className={`w-full pt-4 px-3 border  rounded text-lg focus:outline-none bg-background-gray
+                  className={`w-full pt-4 px-3 border  rounded text-base md:text-lg focus:outline-none bg-background-gray
                      text-black peer focus:border-background-main focus:ring-1 focus:ring-background-main ${
                        errors.city ? "border-red-500" : "border-gray-500"
                      }`}
                 />
                 <label
                   htmlFor="city"
-                  className={`absolute left-3 top-1 text-xs text-gray-600 peer-focus:text-background-main ${
+                  className={`absolute left-3 top-1 text-xs md:text-sm text-gray-600 peer-focus:text-background-main ${
                     errors.city ? "text-red-500" : "text-gray-600"
                   } `}
                 >
@@ -233,17 +244,16 @@ export default function DeliveryStep({
                   type="text"
                   value={data.street}
                   onChange={(e) => {
-                    // setErrors((prev) => ({ ...prev, street: false }));
                     onChange({ street: e.target.value });
                   }}
-                  className={`w-full pt-4 px-3 border  rounded text-lg focus:outline-none bg-background-gray
+                  className={`w-full pt-4 px-3 border  rounded text-base md:text-lg focus:outline-none bg-background-gray
                      text-black peer focus:border-background-main focus:ring-1 focus:ring-background-main ${
                        errors.street ? "border-red-500" : "border-gray-500"
                      }`}
                 />
                 <label
                   htmlFor="street"
-                  className={`absolute left-3 top-1 text-xs text-gray-600 peer-focus:text-background-main ${
+                  className={`absolute left-3 top-1 text-xs md:text-sm text-gray-600 peer-focus:text-background-main ${
                     errors.street ? "text-red-500" : "text-gray-600"
                   } `}
                 >
@@ -257,17 +267,16 @@ export default function DeliveryStep({
                   type="text"
                   value={data.postalCode}
                   onChange={(e) => {
-                    //  setErrors((prev) => ({ ...prev, postalCode: false }));
                     onChange({ postalCode: e.target.value });
                   }}
-                  className={`w-full pt-4 px-3 border  rounded text-lg focus:outline-none bg-background-gray
+                  className={`w-full pt-4 px-3 border  rounded text-base md:text-lg focus:outline-none bg-background-gray
                      text-black peer focus:border-background-main focus:ring-1 focus:ring-background-main ${
                        errors.postalCode ? "border-red-500" : "border-gray-500"
                      }`}
                 />
                 <label
                   htmlFor="postalCode"
-                  className={`absolute left-3 top-1 text-xs text-gray-600 peer-focus:text-background-main ${
+                  className={`absolute left-3 top-1 text-xs md:text-sm text-gray-600 peer-focus:text-background-main ${
                     errors.postalCode ? "text-red-500" : "text-gray-600"
                   } `}
                 >
@@ -279,14 +288,14 @@ export default function DeliveryStep({
 
             <LocationFetcher onClick={handleGetLocation} />
             {deliveryAllowed === false && (
-              <div className="mt-2 text-sm text-red-500">
+              <div className="mt-2 text-sm md:text-base text-red-500">
                 Obecnie nie prowadzimy dostawy do tego miejsca.
               </div>
             )}
           </div>
         )}
         {errors.type && (
-          <div className="mt-2 ml-2 text-sm text-red-500">
+          <div className="mt-2 ml-2 text-sm md:text-base text-red-500">
             Nie wybrano sposobu odbioru.
           </div>
         )}

@@ -10,7 +10,6 @@ export default function PaymentStep({ onSubmit, onBack }: Props) {
   const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const handleOnSubmit = () => {
-    console.log("Submitting payment step",validatePayment());
     if (validatePayment()) {
       onSubmit();
     }

@@ -27,10 +27,8 @@ export async function reverseGeocodeCoords(
       lat,
       lng,
     });
-    console.log("Odpowiedź z reverse geokodowania:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Błąd reverse geokodowania:", error);
     return null;
   }
 }

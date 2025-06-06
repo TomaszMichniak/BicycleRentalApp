@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import CartIcon from "../assets/cart-shopping-solid.svg";
+import CartIcon from "./icons/cartIcon";
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
@@ -43,12 +43,12 @@ export default function Navigation() {
               Rezerwacje
             </Link>
           </li>
-          <li>
+          <li className="flex items-center justify-center">
             <Link
               to={`/cart`}
-              className="block"
+              className="block "
             >
-              <img src={CartIcon} alt="Koszyk" className="w-5 h-5" />
+              <CartIcon className="text-background-main h-6 w-6"></CartIcon>
             </Link>
           </li>
         </ul>
@@ -87,7 +87,7 @@ export default function Navigation() {
                 to={`/cart`}
                 className="flex items-center justify-center space-x-2"
               >
-                <img src={CartIcon} alt="Koszyk" className="w-5 h-5" />
+                <CartIcon className="text-background-main h-5 w-5"></CartIcon>
               </Link>
             </li>
           </ul>

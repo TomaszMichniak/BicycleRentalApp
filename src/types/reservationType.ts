@@ -10,6 +10,7 @@ export type Reservation = {
   createdAt: string;
   guestId: string;
   addressId: string;
+  deliveryHours:string
   bicycles: BikeType[];
   payment: Payment;
 };

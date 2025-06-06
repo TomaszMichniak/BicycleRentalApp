@@ -1,24 +1,24 @@
 import { useCart } from "../context/cartContext";
 import { BikeSize } from "../types/bikeType";
-import BinIcon from "../assets/trash-solid.svg";
 import { Link } from "react-router-dom";
+import TrashIcon from "./icons/trashIcon";
 export default function Cart() {
-  const { cart, rentalPeriod, removeFromCart, totalCount } = useCart();
+  const { cart, rentalPeriod, removeFromCart, totalCount,rentalDays } = useCart();
   const [start, end] = rentalPeriod;
-  const rentalDays =
-    start && end
-      ? Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24))
-      : 0;
-
   return (
     <section className="p-2 max-w-screen-md mx-auto">
-      <h2 className="text-2xl mb-4">🛒 Koszyk</h2>
+      <h2 className="text-2xl md:text-3xl mb-4">
+         Twój koszyk</h2>
 
       {start && end && cart.length > 0 ? (
-        <p className="text-sm text-gray-600 mb-4">
-          Wypożyczenie od: <strong>{start.toLocaleDateString()}</strong> do{" "}
-          <strong>{end.toLocaleDateString()}</strong> ({rentalDays}{" "}
-          {rentalDays === 1 ? "dzień" : "dni"})
+         <p className="text-sm md:text-base text-gray-600 mb-4">
+          Wypożyczenie od:
+          <span className="font-bold text-base md:text-lg">
+            {" "}
+            {start.toLocaleDateString()} –{" "}
+            {end.toLocaleDateString()}
+          </span>
+          {" "}({rentalDays} {rentalDays === 1 ? "dzień" : "dni"})
         </p>
       ) : (
         <p className="text-gray-500 text-center md:text-lg">
@@ -57,7 +57,7 @@ export default function Cart() {
                   onClick={() => removeFromCart(name, size)}
                   className="text-white px-3 py-1 rounded ml-auto cursor-pointer"
                 >
-                  <img src={BinIcon} alt="Usuń" className="w-5 h-5" />
+                  <TrashIcon className="w-7 h-7 md:w-9 md:h-9 text-red-500"/>
                 </button>
               </li>
             ))}
@@ -65,7 +65,7 @@ export default function Cart() {
 
           {rentalDays > 0 && (
             <div className="mt-6 text-right">
-              <p className="text-xl font-bold">
+              <p className="text-xl md:text-2xl font-bold">
                 Cena całkowita: {totalCount} zł
               </p>
             </div>

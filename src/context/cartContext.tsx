@@ -9,20 +9,24 @@ type AuthContextProviderProps = {
 type CartContextValue = {
   cart: CartItem[];
   rentalPeriod: [Date | null, Date | null];
-  setRentalPeriod: (period: [Date | null, Date | null]) => void;
+  setRentalPeriodSafe: (period: [Date | null, Date | null]) => void;
+  setRentalPeriodUnsafe: (period: [Date | null, Date | null]) => void;
   addToCart: (item: CartItem) => void;
   removeFromCart: (name: string, size: BikeSize) => void;
   clearCart: () => void;
   totalCount: number;
+  rentalDays: number;
 };
 export const CartContext = createContext<CartContextValue>({
   cart: [],
   rentalPeriod: [null, null],
-  setRentalPeriod: () => {},
+  setRentalPeriodSafe: () => {},
+  setRentalPeriodUnsafe: () => {},
   addToCart: () => {},
   removeFromCart: () => {},
   clearCart: () => {},
   totalCount: 0,
+  rentalDays: 1,
 });
 export const useCart = () => {
   const context = useContext(CartContext);
@@ -52,6 +56,7 @@ export default function CartContextProvider({
     (sum, bike) => sum + bike.pricePerDay * rentalDays * bike.quantity,
     0
   );
+
   const addToCart = (bikeToAdd: CartItem) => {
     setCart((prev) => {
       const existingIndex = prev.findIndex(
@@ -89,16 +94,22 @@ export default function CartContextProvider({
     }
     setRentalPeriod(newPeriod);
   };
+  const setRentalPeriodUnsafe = (newPeriod: [Date | null, Date | null]) => {
+    setRentalPeriod(newPeriod);
+  };
+
   return (
     <CartContext.Provider
       value={{
         cart,
         rentalPeriod,
-        setRentalPeriod: setRentalPeriodSafe,
+        setRentalPeriodSafe,
+        setRentalPeriodUnsafe,
         addToCart,
         removeFromCart,
         clearCart,
         totalCount,
+        rentalDays,
       }}
     >
       {children}

@@ -7,11 +7,13 @@ import { FormDataValues } from "../types/formDataValues";
 import { useCart } from "../context/cartContext";
 import { CreateReservationWithPayment } from "../api/reservation";
 import MobileForm from "./mobileForm";
+import ModalAccept from "./modals/modalAccept";
 type Props = {
   hideCart: () => void;
   showCart: () => void;
 };
 export default function ResponsiveForm({ hideCart, showCart }: Props) {
+  const [modalMessage, setModalMessage] = useState<string | null>(null);
   const [contactErrors, setContactErrors] = useState<{
     [key: string]: boolean;
   }>({});
@@ -31,8 +33,7 @@ export default function ResponsiveForm({ hideCart, showCart }: Props) {
       postalCode: "",
       type: null,
     },
-    deliveryHours: "",
-    paymentMethod: "card",
+    deliveryHours: "08:00 - 09:00",
     bicycles: cart,
   });
   const updateGuest = (data: Partial<Guest>) => {
@@ -50,7 +51,6 @@ export default function ResponsiveForm({ hideCart, showCart }: Props) {
   };
   const updateAddress = (data: Partial<Address>) => {
     const key = Object.keys(data)[0] as keyof Address;
-
     setFormData((prev) => ({
       ...prev,
       address: {
@@ -86,7 +86,32 @@ export default function ResponsiveForm({ hideCart, showCart }: Props) {
         return;
       }
     }
-    await CreateReservationWithPayment(formData);
+    try {
+      await CreateReservationWithPayment(formData);
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        const { error: errorCode, message } = error.response.data;
+        if (errorCode === "AddressResolutionFailed") {
+          setModalMessage(
+            "Nie udało się przetworzyć adresu. Sprawdź poprawność i spróbuj ponownie."
+          );
+        } else if (errorCode === "AddressOutOfDeliveryRange") {
+          setModalMessage(
+            "Adres jest poza zasięgiem dostawy. Proszę wybierz inny adres lub skontaktuj się z nami."
+          );
+        } else if (errorCode === "BicyclesUnavailable") {
+          setModalMessage(
+            "Brak dostępnych rowerów. Wybierz inny termin lub lokalizację."
+          );
+        } else {
+          setModalMessage("Wystąpił błąd: " + message);
+        }
+      } else {
+        setModalMessage(
+          "Wystąpił nieoczekiwany błąd. Spróbuj ponownie później."
+        );
+      }
+    }
   };
   const validateContact = () => {
     const { firstName, lastName, email, phone } = formData.guest;
@@ -103,7 +128,7 @@ export default function ResponsiveForm({ hideCart, showCart }: Props) {
     const { city, street, postalCode, type } = formData.address;
     const newErrors: { [key: string]: boolean } = {};
 
-    if (type==null) newErrors.type = true;
+    if (type == null) newErrors.type = true;
     if (!city) newErrors.city = true;
     if (!street) newErrors.street = true;
     if (!postalCode) {
@@ -117,33 +142,44 @@ export default function ResponsiveForm({ hideCart, showCart }: Props) {
     setDeliveryErrors(newErrors);
     return newErrors;
   };
-  return isMobile ? (
-    <MobileForm
-      formData={formData}
-      updateGuest={updateGuest}
-      updateAddress={updateAddress}
-      updateForm={updateForm}
-      handleSubmit={handleSubmit}
-      hideCart={hideCart}
-      showCart={showCart}
-      validateContact={validateContact}
-      validateDelivery={validateDelivery}
-      contactErrors={contactErrors}
-      deliveryErrors={deliveryErrors}
-      setDeliveryErrors={setDeliveryErrors}
-    />
-  ) : (
-    <DesktopForm
-      formData={formData}
-      updateGuest={updateGuest}
-      updateAddress={updateAddress}
-      updateForm={updateForm}
-      handleSubmit={handleSubmit}
-      validateContact={validateContact}
-      validateDelivery={validateDelivery}
-      contactErrors={contactErrors}
-      setDeliveryErrors={setDeliveryErrors}
-      deliveryErrors={deliveryErrors}
-    />
+  return (
+    <>
+      {isMobile ? (
+        <MobileForm
+          formData={formData}
+          updateGuest={updateGuest}
+          updateAddress={updateAddress}
+          updateForm={updateForm}
+          handleSubmit={handleSubmit}
+          hideCart={hideCart}
+          showCart={showCart}
+          validateContact={validateContact}
+          validateDelivery={validateDelivery}
+          contactErrors={contactErrors}
+          deliveryErrors={deliveryErrors}
+          setDeliveryErrors={setDeliveryErrors}
+        />
+      ) : (
+        <DesktopForm
+          formData={formData}
+          updateGuest={updateGuest}
+          updateAddress={updateAddress}
+          updateForm={updateForm}
+          handleSubmit={handleSubmit}
+          validateContact={validateContact}
+          validateDelivery={validateDelivery}
+          contactErrors={contactErrors}
+          setDeliveryErrors={setDeliveryErrors}
+          deliveryErrors={deliveryErrors}
+        />
+      )}
+      {modalMessage && (
+        <ModalAccept
+          message={modalMessage}
+          onAccept={() => setModalMessage(null)}
+          acceptLabel="Rozumiem"
+        />
+      )}
+    </>
   );
 }

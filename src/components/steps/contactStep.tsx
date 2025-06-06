@@ -29,7 +29,7 @@ export default function ContactStep({
   return (
     <div className="space-y-4  ">
       <div className="bg-background-main p-4">
-        <h2 className="text-4xl text-white">Twoje dane</h2>
+        <h2 className="text-3xl md:text-4xl text-white">Twoje dane</h2>
       </div>
       <div className="px-4 space-y-4">
         {[
@@ -70,7 +70,7 @@ export default function ContactStep({
               onChange={(e) => {
                 onChange({ [field.key]: e.target.value });
               }}
-              className={`w-full pt-4 px-3 border rounded text-lg focus:outline-none bg-background-gray text-black peer
+              className={`w-full pt-4 px-3 border rounded text-base md:text-lg focus:outline-none bg-background-gray text-black peer
                 ${
                   errors[field.key]
                     ? "border-red-500 focus:border-red-500 focus:ring-red-500"
@@ -80,7 +80,7 @@ export default function ContactStep({
             />
             <label
               htmlFor={field.id}
-              className={`absolute left-3 top-1 text-xs peer-focus:text-background-main
+              className={`absolute left-3 top-1 text-xs md:text-sm peer-focus:text-background-main
                 ${errors[field.key] ? "text-red-500" : "text-gray-600"}
               `}
             >

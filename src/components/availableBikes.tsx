@@ -11,22 +11,39 @@ type Props = {
 };
 export default function AvailableBikes({ bikes, selectedDate }: Props) {
   const groupedBikes = groupBikesByNameAndSize(bikes);
-  const { setRentalPeriod } = useCart();
+  const { setRentalPeriodSafe } = useCart();
 
   useEffect(() => {
-    setRentalPeriod(selectedDate); 
+    setRentalPeriodSafe(selectedDate);
   }, [selectedDate]);
+  const rentalDays =
+    selectedDate[0] && selectedDate[1]
+      ? Math.ceil(
+          (selectedDate[1].getTime() - selectedDate[0].getTime()) /
+            (1000 * 60 * 60 * 24)
+        )
+      : 0;
   return (
     <section className="max-w-screen-lg mx-auto p-4">
-      <h2 className="text-2xl ">Dostępne rowery:</h2>
+      <h2 className="text-2xl md:text-3xl ">Dostępne rowery:</h2>
       {selectedDate[0] && selectedDate[1] && (
-        <p className="text-sm text-gray-600 mb-4">
-          W okresie: {selectedDate[0].toLocaleDateString()} –{" "}
-          {selectedDate[1].toLocaleDateString()}
+        <p className="text-sm md:text-base text-gray-600 mb-4">
+          W okresie:
+          <span className="font-bold text-base md:text-lg">
+            {" "}
+            {selectedDate[0].toLocaleDateString()} –{" "}
+            {selectedDate[1].toLocaleDateString()}
+          </span>
+          {" "}({rentalDays} {rentalDays === 1 ? "dzień" : "dni"})
         </p>
       )}
       {Object.entries(groupedBikes).map(([name, sizes]) => (
-        <BikeCard key={name} name={name} sizes={sizes} selectedDate={selectedDate} />
+        <BikeCard
+          key={name}
+          name={name}
+          sizes={sizes}
+          selectedDate={selectedDate}
+        />
       ))}
     </section>
   );
