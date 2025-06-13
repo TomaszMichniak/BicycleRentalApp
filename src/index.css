@@ -21,6 +21,7 @@
     clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
   }
 }
+
 :root {
   font-family: "Quicksand-Light", sans-serif;
   color-scheme: light dark;

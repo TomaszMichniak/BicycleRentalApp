@@ -8,6 +8,7 @@ import { useReservationContext } from "../context/reservationContext";
 import { GetAvailableBicyclesByDate } from "../api/bicycle";
 import LoadingLoop from "../components/modals/loadingLoop";
 import ReserationSteps from "../components/reservationSteps";
+import Footer from "../components/footer";
 
 export default function ReservationPage() {
   const [loadingLoop, setLoadingLoop] = useState(false);
@@ -55,6 +56,7 @@ export default function ReservationPage() {
       />
       <AvailableBikes bikes={bikes} selectedDate={value} />
       {loadingLoop && <LoadingLoop></LoadingLoop>}
+      <Footer></Footer>
     </>
   );
 }

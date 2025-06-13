@@ -5,7 +5,7 @@ export async function GetPickupLocations(
 ): Promise<Address[]> {
   try {
     const response = await api.get(
-      `/Address/Search?addressType=0`
+      `/Address/GetPickupPoints`
     );
     return response.data.items;
   } catch (error) {

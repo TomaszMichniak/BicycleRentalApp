@@ -36,7 +36,7 @@ export const DesktopForm = ({
       onSubmit={(e) => {
         e.preventDefault();
       }}
-      className="grid grid-cols-3 gap-6 p-6 bg-white rounded-xl shadow-lg max-w-6xl mx-auto"
+      className="grid grid-cols-3 gap-6 p-6 mb-10 bg-white rounded-xl shadow-lg max-w-6xl mx-auto"
     >
       <div>
         <ContactStep

@@ -1,4 +1,6 @@
+import { Address } from "./addressType";
 import { BikeType } from "./bikeType";
+import { Guest } from "./guestType";
 import { Payment } from "./paymentType";
 
 export type Reservation = {
@@ -8,9 +10,11 @@ export type Reservation = {
   startDate: string; // ISO date string
   endDate: string;
   createdAt: string;
-  guestId: string;
-  addressId: string;
-  deliveryHours:string
+  // guestId: string;
+  // addressId: string;
+  deliveryHours:string;
+  guest:Guest;
+  address:Address;
   bicycles: BikeType[];
   payment: Payment;
 };

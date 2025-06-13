@@ -6,7 +6,7 @@ import { PaymentStatus } from "../types/paymentType";
 
 export default function ReservationStatus() {
   const [loading, setLoading] = useState(true);
-  const [reservation, setReservation] = useState<Reservation|null>(null);
+  const [reservation, setReservation] = useState<Reservation | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { reservationId } = useParams();
   useEffect(() => {
@@ -32,14 +32,18 @@ export default function ReservationStatus() {
     <div className="max-w-md mx-auto mt-20 p-6 bg-green-50 rounded shadow text-center">
       {reservation?.payment.status === PaymentStatus.Paid ? (
         <>
-          <h1 className="text-3xl font-bold mb-4 text-green-700">
+          <h1 className="text-3xl font-bold mb-4 text-background-main">
             Płatność zakończona sukcesem!
           </h1>
           <p className="mb-6">
-            Dziękujemy za dokonanie płatności. Twoja rezerwacja jest teraz
-            potwierdzona.
+            Dziękujemy za dokonanie płatności. Twoja rezerwacja została przyjęta
+            i jest obecnie potwierdzana. Gdy tylko zostanie zatwierdzona,
+            wyślemy potwierdzenie na Twój adres e-mail.
           </p>
-          <a href="/" className="text-green-700 underline hover:text-green-900">
+          <a
+            href="/"
+            className="text-background-main  underline hover:text-green-900"
+          >
             Powrót do strony głównej
           </a>
         </>
@@ -49,14 +53,14 @@ export default function ReservationStatus() {
             Płatność nie została zakończona
           </h1>
           <p className="mb-6">
-            Coś poszło nie tak podczas realizacji płatności. Prosimy spróbować
-            ponownie.
+            Płatność nie została zrealizowana pomyślnie. Prosimy spróbować
+            ponownie. W razie potrzeby służymy pomocą.
           </p>
           <a
-            href="/payment"
-            className="text-red-700 underline hover:text-red-900"
+            href="/"
+            className="text-background-main underline hover:text-green-900"
           >
-            Spróbuj ponownie
+            Powrót do strony głównej
           </a>
         </>
       )}

@@ -5,14 +5,16 @@ import ResponsiveForm from "../components/responsiveForm";
 import { useCart } from "../context/cartContext";
 import { AnimatePresence, motion } from "framer-motion";
 import { useIsMobile } from "../hooks/useIsMobile";
+import Footer from "../components/footer";
 
 export default function CartPage() {
   const [showCart, setShowCart] = useState(true);
   const isMobile = useIsMobile();
   const { cart } = useCart();
   return (
-    <>
+       <div className="min-h-screen flex flex-col">
       <Navigation />
+       <main className="flex-grow">
       {isMobile && (
         <AnimatePresence mode="popLayout">
           {showCart && (
@@ -36,6 +38,8 @@ export default function CartPage() {
           showCart={() => setShowCart(true)}
         />
       )}
-    </>
+      </main>
+      <Footer></Footer>
+    </div>
   );
 }

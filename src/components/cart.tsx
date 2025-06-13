@@ -6,7 +6,7 @@ export default function Cart() {
   const { cart, rentalPeriod, removeFromCart, totalCount,rentalDays } = useCart();
   const [start, end] = rentalPeriod;
   return (
-    <section className="p-2 max-w-screen-md mx-auto">
+    <section className="p-2 max-w-screen-md  mx-auto">
       <h2 className="text-2xl md:text-3xl mb-4">
          Twój koszyk</h2>
 

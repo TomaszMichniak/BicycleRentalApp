@@ -28,3 +28,18 @@ export async function CheckReservationStatus(
     throw new Error("Failed to find reservation: " + (error as Error).message);
   }
 }
+export async function GetReservationToAccept():Promise<Reservation[]>{
+    const response =await api.get("/Reservation/Search?Status=0")
+  return response.data.items
+}
+
+export async function ConfirmReservation(reservationId: string){
+  const response = await api.patch(
+    `/Reservation/confirm-reservation/${reservationId}`,
+  );
+}
+export async function RefundReservation(payUOrderId:string,description:string,reservationId:string){
+    const response = await api.post(
+    `/Payment/refund`,{reservationId,payUOrderId,description}
+  );
+}
