@@ -31,7 +31,7 @@ export default function Navigation() {
           <li>
             <HashLink
               smooth
-              to={`/#aboutUs`}
+              to={`/#o-nas`}
               className="block hover:text-background-main"
             >
               O nas
@@ -40,7 +40,7 @@ export default function Navigation() {
           <li>
             <HashLink
               smooth
-              to={`/#ourOffer`}
+              to={`/#nasza-oferta`}
               className="block hover:text-background-main"
             >
               Nasza oferta
@@ -48,14 +48,14 @@ export default function Navigation() {
           </li>
           <li>
             <Link
-              to={`/reservations`}
+              to={`/rezerwacja`}
               className="block hover:text-background-main"
             >
-              Rezerwacje
+              Rezerwacja
             </Link>
           </li>
           <li className="flex items-center justify-center">
-            <Link to={`/cart`} className="block ">
+            <Link to={`/koszyk`} className="block ">
               <CartIcon className="text-background-main h-6 w-6"></CartIcon>
             </Link>
           </li>
@@ -77,23 +77,23 @@ export default function Navigation() {
                 </Link>
               </li>
               <li>
-                <HashLink smooth to={`/#aboutUs`} className="block p-2">
+                <HashLink smooth to={`/#o-nas`} className="block p-2">
                   O nas
                 </HashLink>
               </li>
               <li>
-                <HashLink smooth to={`/#ourOffer`} className="block p-2">
+                <HashLink smooth to={`/#oferta`} className="block p-2">
                   Nasza oferta
                 </HashLink>
               </li>
               <li>
-                <Link to={`/reservations`} className="block p-2 ">
-                  Rezerwacje
+                <Link to={`/rezerwacja`} className="block p-2 ">
+                  Rezerwacja
                 </Link>
               </li>
               <li>
                 <Link
-                  to={`/cart`}
+                  to={`/koszyk`}
                   className="flex items-center p-2 justify-center space-x-2"
                 >
                   <CartIcon className="text-background-main h-7 w-7"></CartIcon>

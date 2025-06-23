@@ -7,7 +7,7 @@ import PhoneIcon from "./icons/phoneIcon";
 
 export default function AboutUs() {
   return (
-    <section id="aboutUs" className="max-w-screen-lg mx-auto my-8 px-2">
+    <section id="o-nas" className="max-w-screen-lg mx-auto my-8 px-2">
       <h2 className="text-2xl mb-4 text-center">Dlaczego warto nas wybrać?</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
         <div className="flex  flex-col justify-start items-center">

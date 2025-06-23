@@ -10,6 +10,8 @@ import { AuthProvider } from "./context/authContext";
 import { ProtectedRoute, PublicOnlyRoute } from "./components/dashboard/protectedRoute";
 import DashboardPage from "./pages/dashboardPage";
 import LoginPage from "./pages/loginPage";
+import StatuePage from "./pages/statutePage";
+import PrivacyPolicyPage from "./pages/privacyPolicyPage";
 
 function App() {
   return (
@@ -37,8 +39,10 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/reservations" element={<ReservationPage />} />
-            <Route path="/cart" element={<CartPage />} />
+            <Route path="/rezerwacja" element={<ReservationPage />} />
+            <Route path="/regulamin" element={<StatuePage />} />
+            <Route path="/polityka-prywatności" element={<PrivacyPolicyPage />} />
+            <Route path="/koszyk" element={<CartPage />} />
             <Route
               path="/reservations/status/:reservationId"
               element={<ReservationStatusPage />}

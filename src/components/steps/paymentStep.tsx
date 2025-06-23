@@ -1,6 +1,7 @@
 import { useState } from "react";
 import NextStepButton from "../buttons/nextStepButton";
 import PreviousStepButton from "../buttons/previousStepButton";
+import ModalAccept from "../modals/modalAccept";
 
 type Props = {
   onBack?: () => void;
@@ -9,7 +10,11 @@ type Props = {
 export default function PaymentStep({ onSubmit, onBack }: Props) {
   const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [showModalCancelPayment, setShowModalCancelPayment] = useState(false);
   const handleOnSubmit = () => {
+    //Payment method disabled for now
+    setShowModalCancelPayment(true);
+    return;
     if (validatePayment()) {
       onSubmit();
     }
@@ -86,6 +91,13 @@ export default function PaymentStep({ onSubmit, onBack }: Props) {
           onNext={handleOnSubmit}
         />
       </div>
+         {showModalCancelPayment && (
+              <ModalAccept
+                message="Płatności online są obecnie wyłączone. W celu dokonania rezerwacji oraz uzyskania dodatkowych informacji prosimy o kontakt telefoniczny z obsługą klienta"
+                onAccept={() => setShowModalCancelPayment(false)}
+                acceptLabel="Rozumiem"
+              />
+            )}
     </div>
   );
 }

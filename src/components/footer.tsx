@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import EmailIcon from "./icons/emailIcon";
 import LocationIcon from "./icons/locationIcon";
 import PhoneIcon from "./icons/phoneIcon";
@@ -18,7 +19,7 @@ export default function Footer() {
         <div className="flex flex-col items-center">
           <EmailIcon className="text-white w-10 h-10 mb-2" />
           <h3 className="font-medium text-lg">E-mail</h3>
-          <p className="text-sm md:text-base">To_edit@email.pl</p>
+          <p className="text-sm md:text-base">pmemountainbikes@gmail.com</p>
         </div>
         <div className="flex flex-col items-center">
           <LocationIcon className="text-white w-10 h-10 mb-2" />
@@ -37,8 +38,8 @@ export default function Footer() {
       </div>
 
       <div className=" flex flex-row justify-center text-center text-sm md:text-base gap-2 px-2">
-        <a>Regulamin</a>{"-"}
-        <a>Polityka prywatności</a>
+        <Link to={"/regulamin"}>Regulamin</Link>{"-"}
+        <Link to={"/polityka-prywatności"}>Polityka prywatności</Link>{"-"}
       </div>
         <p className=" text-center">
           &copy; PM eMountainBikes 2025

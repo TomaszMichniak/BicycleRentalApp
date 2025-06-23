@@ -24,8 +24,8 @@ export default function Cart() {
         <p className="text-gray-500 text-center md:text-lg">
           Wygląda na to, że koszyk jest pusty. Dodaj rowery, przechodząc do
           sekcji{" "}
-          <Link to={"/reservations"} className=" cursor-pointer underline">
-            Rezerwacje
+          <Link to={"/rezerwacja"} className=" cursor-pointer underline">
+            Rezerwacja
           </Link>
         </p>
       )}

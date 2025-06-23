@@ -164,7 +164,7 @@ export default function BikeCard({ name, sizes, selectedDate }: Props) {
         <ModalAccept
           message="Dodano do koszyka! Kontynuujesz zakupy czy przechodzisz do płatności?"
           onCancel={() => setShowModalCart(false)}
-          onAccept={() => navigate("/cart")}
+          onAccept={() => navigate("/koszyk")}
           acceptLabel="Przejdź do koszyka"
           cancelLabel="Kontynuuj zakupy"
         />

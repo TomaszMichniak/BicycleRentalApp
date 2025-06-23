@@ -4,14 +4,14 @@ import { useEffect, useRef, useState } from "react";
 export default function OurOffer() {
   const imagesLeft = [
     "./src/assets/rower-elektryczny-gorski-mtb-rockrider-e-st-500-275-4.jpg",
-    "./src/assets/rower-elektryczny-gorski-mtb-rockrider-e-st-500-275-4.jpg",
-    "./src/assets/rower-elektryczny-gorski-mtb-rockrider-e-st-500-275-4.jpg",
+    "./src/assets/rower-elektryczny-gorski-mtb-rockrider-e-st-500-275-5.jpg",
   ];
 
   const imagesRight = [
-    "./src/assets/rower-elektryczny-gorski-mtb-rockrider-e-st-500-275.jpg",
-    "./src/assets/rower-elektryczny-gorski-mtb-rockrider-e-st-500-275-2.jpg",
-    "./src/assets/rower-elektryczny-gorski-mtb-rockrider-e-st-500-275-3.jpg",
+    "./src/assets/924caaa7-2ef2-42e7-ae71-c68198d92330.png",
+    "./src/assets/d3c5d781-f394-4e46-8d78-1ff3ad795bfc.png",
+    "./src/assets/f2a85482-8634-4201-80c8-8bc4d548ab62.png",
+
   ];
 
   // stan i kierunek lewego slidera
@@ -96,7 +96,7 @@ export default function OurOffer() {
   }, [isRightInView]);
 
   return (
-    <section id="ourOffer" className="bg-background-third py-16">
+    <section id="nasza-oferta" className="bg-background-third py-16">
       <div className="max-w-screen-lg mx-auto p-4 text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-20 text-black">
           {/* Lewa kolumna */}
