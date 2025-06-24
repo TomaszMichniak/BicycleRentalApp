@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "https://localhost:7227/api";
+const API_URL = "https://pmebikes-api-app-hgacg8e3dghsghcc.polandcentral-01.azurewebsites.net/api";
 export const api = axios.create({
   baseURL: API_URL,
   timeout: 10000,
