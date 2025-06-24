@@ -1,5 +1,5 @@
-import imgMobile from "./assets/DSC_11_640.jpg";
-import imgDesktop from "./assets/11.jpg";
+import imgMobile from "../assets/DSC_11_640.jpg";
+import imgDesktop from "../assets/11.jpg";
 import { useIsMobile } from "../hooks/useIsMobile";
 export default function Header() {
   const isMobile = useIsMobile();
