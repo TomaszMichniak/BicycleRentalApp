@@ -1,4 +1,3 @@
-import { form } from "framer-motion/client";
 import { Address } from "../types/addressType";
 import { FormDataValues } from "../types/formDataValues";
 import { Guest } from "../types/guestType";
@@ -54,7 +53,6 @@ export const DesktopForm = ({
           validateDelivery={validateDelivery}
           errors={deliveryErrors}
           setErrors={setDeliveryErrors}
-          deliveryHours={formData.deliveryHours}
         />
       </div>
       <div>

@@ -18,7 +18,7 @@ export default function LocationFetcher({ onClick }: Props) {
         console.log("onclick:");
         onClick(position.coords.latitude, position.coords.longitude);
       },
-      (err) => {
+      () => {
         setError(`Nie udało się pobrać lokalizacji. Wprowadź adres ręcznie.`);
       }
     );

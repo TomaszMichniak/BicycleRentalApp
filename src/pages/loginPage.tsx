@@ -9,7 +9,7 @@ export default function LoginPage() {
   const { authenticate,isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const handleLogin = async (email:string,password:string,confirmPassword:string) => {
+  const handleLogin = async (email:string,password:string) => {
     try {
       const token = await Login(email, password);
 
@@ -27,7 +27,7 @@ export default function LoginPage() {
       navigate("/dashboard");
     } catch (error: any) {
       if (error.response && error.response.data) {
-        const { error: errorCode, message } = error.response.data;
+        const { error: errorCode } = error.response.data;
         if (errorCode === "Invalid data") {
           setError("Nieprawidłowe dane logowania");
         }

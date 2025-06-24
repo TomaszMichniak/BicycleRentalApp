@@ -3,7 +3,7 @@ import DashboardNavigation from "../components/dashboard/dashboardNavigation";
 import { useAuth } from "../context/authContext";
 
 export default function DashboardPage() {
-  const { userRole, logout } = useAuth();
+  const { userRole } = useAuth();
 
   return (
     <>

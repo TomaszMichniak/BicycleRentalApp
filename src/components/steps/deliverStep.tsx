@@ -13,7 +13,6 @@ import LoadingLoop from "../modals/loadingLoop";
 type Props = {
   errors: { [key: string]: boolean };
   data: Address;
-  deliveryHours?: string;
   onChange: (data: Partial<Address>) => void;
   updateForm: (data: Partial<FormDataValues>) => void;
   onBack?: () => void;
@@ -26,7 +25,6 @@ export default function DeliveryStep({
   data,
   errors,
   setErrors,
-  deliveryHours,
   onBack,
   onChange,
   onNext,

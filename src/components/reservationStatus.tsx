@@ -15,6 +15,8 @@ export default function ReservationStatus() {
       if (reservationId) {
         const result = await CheckReservationStatus(reservationId);
         setReservation(result);
+      }else{
+        setError("Nie podano identyfikatora rezerwacji.");
       }
       setLoading(false);
     })();

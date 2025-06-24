@@ -1,18 +1,13 @@
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-
+import img1 from "../assets/rower-elektryczny-gorski-mtb-rockrider-e-st-500-275-4.jpg";
+import img2 from "../assets/rower-elektryczny-gorski-mtb-rockrider-e-st-500-275-5.jpg";
+import img3 from "../assets/924caaa7-2ef2-42e7-ae71-c68198d92330.png";
+import img4 from "../assets/d3c5d781-f394-4e46-8d78-1ff3ad795bfc.png";
+import img5 from "../assets/f2a85482-8634-4201-80c8-8bc4d548ab62.png";
 export default function OurOffer() {
-  const imagesLeft = [
-    "./src/assets/rower-elektryczny-gorski-mtb-rockrider-e-st-500-275-4.jpg",
-    "./src/assets/rower-elektryczny-gorski-mtb-rockrider-e-st-500-275-5.jpg",
-  ];
-
-  const imagesRight = [
-    "./src/assets/924caaa7-2ef2-42e7-ae71-c68198d92330.png",
-    "./src/assets/d3c5d781-f394-4e46-8d78-1ff3ad795bfc.png",
-    "./src/assets/f2a85482-8634-4201-80c8-8bc4d548ab62.png",
-
-  ];
+  const imagesLeft = [img1, img2];
+  const imagesRight = [img3, img4, img5];
 
   // stan i kierunek lewego slidera
   const [currentImageLeft, setCurrentImageLeft] = useState(0);

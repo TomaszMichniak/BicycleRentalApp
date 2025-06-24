@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const ProtectedRoute = ({ children, allowedRoles }: Props) => {
-  const { isAuthenticated, userRole,token } = useAuth();
+  const { isAuthenticated, userRole } = useAuth();
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   
   if (allowedRoles && (!userRole || !allowedRoles.includes(userRole))) {

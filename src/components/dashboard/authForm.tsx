@@ -3,18 +3,19 @@ import { useState } from "react";
 type Props = {
   isLogin: boolean;
   error: string;
-  onSubmit: (email: string, password: string, confirmPassword: string) => void;
+  onSubmit: (email: string, password: string) => void;
 };
 
 export default function AuthForm({ isLogin, onSubmit, error }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const submitHandler = () => {
-    onSubmit(email, password, confirmPassword);
+    onSubmit(email, password );
   };
+
   return (
     <div className="flex justify-center items-center mt-16 ">
+      {isLogin}
       <div className="bg-white p-6 rounded shadow-md space-y-4 w-80">
         <h1 className="text-2xl font-bold text-center">Zaloguj się</h1>
 
