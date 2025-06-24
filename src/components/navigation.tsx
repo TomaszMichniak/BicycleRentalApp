@@ -82,7 +82,7 @@ export default function Navigation() {
                 </HashLink>
               </li>
               <li>
-                <HashLink smooth to={`/#oferta`} className="block p-2">
+                <HashLink smooth to={`/#nasza-oferta`} className="block p-2">
                   Nasza oferta
                 </HashLink>
               </li>
