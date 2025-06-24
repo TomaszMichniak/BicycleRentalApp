@@ -2,6 +2,7 @@ import { useState } from "react";
 import NextStepButton from "../buttons/nextStepButton";
 import PreviousStepButton from "../buttons/previousStepButton";
 import ModalAccept from "../modals/modalAccept";
+import { Link } from "react-router-dom";
 
 type Props = {
   onBack?: () => void;
@@ -67,14 +68,19 @@ export default function PaymentStep({ onSubmit, onBack }: Props) {
             className="text-sm text-gray-700 cursor-pointer"
           >
             Akceptuję{" "}
-            <a
-              href="/regulamin"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to={"/regulamin"}
               className="text-background-main underline"
             >
               regulamin
-            </a>
+            </Link>
+            {" i "}
+            <Link
+              to={"/polityka-prywatności"}
+              className="text-background-main underline"
+            >
+              politykę prywatności
+            </Link>
           </label>
         </div>
         {errors.acceptedTerms && (
@@ -91,13 +97,13 @@ export default function PaymentStep({ onSubmit, onBack }: Props) {
           onNext={handleOnSubmit}
         />
       </div>
-         {showModalCancelPayment && (
-              <ModalAccept
-                message="Płatności online są obecnie wyłączone. W celu dokonania rezerwacji oraz uzyskania dodatkowych informacji prosimy o kontakt telefoniczny z obsługą klienta"
-                onAccept={() => setShowModalCancelPayment(false)}
-                acceptLabel="Rozumiem"
-              />
-            )}
+      {showModalCancelPayment && (
+        <ModalAccept
+          message="Płatności online są obecnie wyłączone. W celu dokonania rezerwacji oraz uzyskania dodatkowych informacji prosimy o kontakt telefoniczny z obsługą klienta"
+          onAccept={() => setShowModalCancelPayment(false)}
+          acceptLabel="Rozumiem"
+        />
+      )}
     </div>
   );
 }

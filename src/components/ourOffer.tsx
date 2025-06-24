@@ -119,15 +119,15 @@ export default function OurOffer() {
               </AnimatePresence>
               <button
                 onClick={handlePrevLeft}
-                className="absolute top-0 left-0 h-full text-white p-2"
+                className="absolute top-0 left-0 h-full text-4xl font-bold text-white p-2"
               >
-                ◀
+                {"<"}
               </button>
               <button
                 onClick={handleNextLeft}
-                className="absolute top-0 right-0 h-full text-white p-2"
+                className="absolute top-0 right-0 h-full text-4xl font-bold text-white p-2"
               >
-                ▶
+                {">"}
               </button>
             </div>
             <div className="p-2">
@@ -175,15 +175,15 @@ export default function OurOffer() {
               </AnimatePresence>
               <button
                 onClick={handlePrevRight}
-                className="absolute top-0 left-0 h-full text-white p-2"
+                className="absolute top-0 left-0 h-full text-4xl font-bold text-white p-2"
               >
-                ◀
+                {"<"}
               </button>
               <button
                 onClick={handleNextRight}
-                className="absolute top-0 right-0 h-full text-white p-2"
+                className="absolute top-0 right-0 h-full text-4xl font-bold text-white p-2"
               >
-                ▶
+                {">"}
               </button>
             </div>
             <div className="p-2">
