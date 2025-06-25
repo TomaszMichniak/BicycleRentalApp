@@ -33,9 +33,7 @@ export default function ReservationPage() {
           console.error("Failed to fetch available bicycles", error);
         }
       }
-      setTimeout(() => {
-        setLoadingLoop(false);
-      }, 300);
+      setLoadingLoop(false);
     })();
   }, [value]);
 
@@ -48,7 +46,7 @@ export default function ReservationPage() {
     <>
       <Navigation></Navigation>
       <h1 className="text-2xl md:text-3xl text-center my-4">Jak to zrobić?</h1>
-      <ReserationSteps/>
+      <ReserationSteps />
       <DatePicker
         value={value}
         onChange={onChange}
