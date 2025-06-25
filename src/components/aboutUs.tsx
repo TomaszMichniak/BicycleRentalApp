@@ -31,7 +31,7 @@ export default function AboutUs() {
           <p className="text-base font-bold">Odbiór osobisty</p>
           <p className="text-sm text-center max-w-xs">
             Wolisz odebrać rower osobiście? Zapraszamy do jednego z naszych
-            dwóch punktów – Kościelisko ul. Nędzy-Kubińca 255 oraz w Nowem
+            dwóch punktów – Kościelisko ul. Nędzy-Kubińca 202 oraz w Nowem
             Bystrem 113
           </p>
         </div>
